@@ -1,12 +1,14 @@
 from PIL import Image, ImageDraw
 import qrcode
+import os
+import sys
 
-def create_qrcode(link, filename):
+def create_qrcode(link, filename, logo_path="logo.png"):
     # Crea el codigo qr
     qr = qrcode.QRCode(
-        version=1, 
+        version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
-        box_size=150, 
+        box_size=150,
         border=1)
 
     # añade la info
@@ -17,10 +19,19 @@ def create_qrcode(link, filename):
 
     # crea la imagen con colores
     img = qr.make_image(fill_color="#134797", back_color="white").convert("RGBA")
-    print(img.size)
+    print(f"Tamaño de la imagen QR: {img.size}")
 
     # abre el logo
-    logo = Image.open("logo.png").convert("RGBA")
+    try:
+        if hasattr(sys, '_MEIPASS'):
+            # ejecutandose como exe
+            logo = Image.open(os.path.join(sys._MEIPASS, os.path.basename(logo_path))).convert("RGBA")
+        else:
+            # python script
+            logo = Image.open(logo_path).convert("RGBA")
+    except FileNotFoundError:
+        print(f"Error: No se encontró el archivo del logo en la ruta: {logo_path}")
+        return  # Sale de la función si no se encuentra el logo
 
     size = int(img.size[0]*0.3) #lo transforma respecto al tamaño del código qr
 
@@ -28,7 +39,7 @@ def create_qrcode(link, filename):
     logo = logo.resize((size, size))
 
     # lo hace más pequeño para que encaje mejor
-    smaller_logo_size = (int(size * 0.9), int(size * 0.9)) 
+    smaller_logo_size = (int(size * 0.9), int(size * 0.9))
     logo_smaller = logo.resize(smaller_logo_size)
 
     # crea un logo nuevo con forma circular
@@ -36,11 +47,11 @@ def create_qrcode(link, filename):
 
     # centra el logo con menor tamaño
     offset = ((logo_with_padding.size[0] - logo_smaller.size[0]) // 2,
-            (logo_with_padding.size[1] - logo_smaller.size[1]) // 2)
+              (logo_with_padding.size[1] - logo_smaller.size[1]) // 2)
     logo_with_padding.paste(logo_smaller, offset, mask=logo_smaller)
 
     # crea una mascara de circulo
-    mask = Image.new("L", logo.size, 0) 
+    mask = Image.new("L", logo.size, 0)
     draw = ImageDraw.Draw(mask)
     draw.ellipse((0, 0, logo.size[0], logo.size[1]), fill=255)  # lo realiza
 
@@ -57,4 +68,7 @@ def create_qrcode(link, filename):
     img.paste(logo_circular, pos, mask=logo_circular)
 
     # lo exporta a un nombre proporcionado por el usuario
-    img.save(filename+".png")
+    filepath = os.path.join(os.getcwd(), filename + ".png")
+    img.save(filepath)
+    print(f"Imagen QR guardada en: {filepath}")
+

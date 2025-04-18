@@ -8,7 +8,7 @@ def create_qr():
     lbl_result["text"] = "Imagen generada"
     
 
-window = tk.Tk()
+window = tk.Tk() 
 window.title("Generador QR Sindicato")
 window.resizable(width=False, height=False)
 
