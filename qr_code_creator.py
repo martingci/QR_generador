@@ -3,6 +3,7 @@ import qrcode
 import os
 import sys
 
+
 def create_qrcode(link, filename, logo_path="logo.png"):
     # Crea el codigo qr
     qr = qrcode.QRCode(
@@ -68,7 +69,6 @@ def create_qrcode(link, filename, logo_path="logo.png"):
     img.paste(logo_circular, pos, mask=logo_circular)
 
     # lo exporta a un nombre proporcionado por el usuario
-    filepath = os.path.join(os.getcwd(), filename + ".png")
-    img.save(filepath)
+    return img
     print(f"Imagen QR guardada en: {filepath}")
 
