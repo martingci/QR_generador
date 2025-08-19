@@ -34,7 +34,7 @@ def create_qrcode(link, filename, logo_path="logo.png"):
         print(f"Error: No se encontró el archivo del logo en la ruta: {logo_path}")
         return  # Sale de la función si no se encuentra el logo
 
-    size = int(img.size[0]*0.4) #lo transforma respecto al tamaño del código qr
+    size = int(img.size[0]*0.3) #lo transforma respecto al tamaño del código qr
 
     # lo cambia de tamaño
     logo = logo.resize((size, size))
