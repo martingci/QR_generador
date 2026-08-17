@@ -1,0 +1,11 @@
+[project]
+name = "qr-generador"
+version = "1.0.0"
+description = "A tool to generate QR Codes"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pillow>=12.2.0",
+    "qrcode>=8.2",
+    "streamlit>=1.57.0",
+]

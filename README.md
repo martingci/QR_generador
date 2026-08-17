@@ -1,0 +1,1 @@
+# Código QR para Streamlit
