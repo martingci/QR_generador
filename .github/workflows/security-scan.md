@@ -6,6 +6,7 @@ permissions:
   copilot-requests: write
 engine:
   id: copilot
+  model: gpt-5-mini
 steps:
   - name: Download security scan reports
     uses: actions/download-artifact@v8
