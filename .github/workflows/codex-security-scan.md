@@ -5,7 +5,7 @@ permissions:
   contents: read
 engine:
   id: codex
-  model: openai/gpt-5.6-luna
+  model: openai/gpt-5.6-terra
   env:
     # Route Codex inference to OpenRouter instead of api.openai.com.
     # Setting this also makes gh-aw emit apiProxy.modelFallback.enabled: false so the
@@ -19,8 +19,8 @@ engine:
     # (codexModelID in pkg/workflow/codex_engine.go), but OpenRouter requires the full
     # "vendor/model" slug. engine.env is merged over the compiler-set model variable, so
     # re-declaring it here restores the prefix. The detection job reads its own variable.
-    GH_AW_MODEL_AGENT_CODEX: openai/gpt-5.6-luna
-    GH_AW_MODEL_DETECTION_CODEX: openai/gpt-5.6-luna
+    GH_AW_MODEL_AGENT_CODEX: openai/gpt-5.6-terra
+    GH_AW_MODEL_DETECTION_CODEX: openai/gpt-5.6-terra
 network:
   allowed:
     - defaults
